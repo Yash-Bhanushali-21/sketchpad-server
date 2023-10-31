@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -7,7 +9,9 @@ const app = express();
 app.use(cors({ origin: "*" }));
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: "http://localhost:3000",
+  cors: {
+    origin: ["http://localhost:3000"],
+  },
 });
 
 app.get("/", (req, res) => {
@@ -16,11 +20,6 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("server connected");
-
-  socket.on("test", () => {
-    console.log("test");
-    socket.emit("message", "incoming from sv.");
-  });
 
   socket.on("beginPath", (arg) => {
     socket.broadcast.emit("beginPath", arg);
@@ -35,6 +34,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5000, () => {
-  console.log("listening on *:5000");
+const PORT = process.env.PORT || 8000;
+
+server.listen(PORT, () => {
+  console.log(`listening on *${PORT}`);
 });
