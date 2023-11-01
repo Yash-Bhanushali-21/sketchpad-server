@@ -15,7 +15,7 @@ const io = new Server(server, {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello you are in and forward hah");
+  res.send("Hello you are in!");
 });
 
 io.on("connection", (socket) => {
