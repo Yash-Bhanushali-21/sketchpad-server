@@ -8,6 +8,8 @@ const cors = require("cors");
 const app = express();
 app.use(cors({ origin: "*" }));
 const server = http.createServer(app);
+const PORT = process.env.PORT || 8000;
+
 const io = new Server(server, {
   cors: {
     origin: ["http://localhost:3000"],
@@ -15,7 +17,7 @@ const io = new Server(server, {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello you are in !!");
+  res.send(`You are connected to port ${PORT}`);
 });
 
 io.on("connection", (socket) => {
@@ -33,8 +35,6 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("changeConfig", arg);
   });
 });
-
-const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, () => {
   console.log(`listening on *${PORT}`);
