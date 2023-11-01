@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    
+    stages{
+        stage("Code Check-in"){
+            steps {
+                echo "Cloning the Code"
+                git url:"https://github.com/Yash-Bhanushali-21/sketchpad-server.git", branch : "main"
+                
+            }
+        }
+        stage("Build"){
+            steps {
+                echo "Building the Code"
+                sh "docker build -t sketch-app ."
+            }
+        }
+        stage("Push Image to Docker Hub"){
+            steps {
+                echo "Pushing the Image to Docker Hub"
+                withCredentials([usernamePassword(credentialsId: "DockerhubCreds",passwordVariable : "dockerHubPass",usernameVariable : "dockerHubUser")]){
+                    sh "docker tag sketch-app ${env.dockerHubUser}/sketch-app:latest"
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                    sh "docker push ${env.dockerHubUser}/sketch-app:latest"
+                }
+            }
+        }
+        stage("Deployment"){
+            steps {
+                echo "Deploying the Container"
+                sh "docker-compose down && docker-compose up -d"
+            }
+        }
+    }
+}
