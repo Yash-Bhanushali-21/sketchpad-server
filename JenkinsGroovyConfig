@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo "Deploying the Container"
                 withCredentials([usernamePassword(credentialsId: "DockerhubCreds",passwordVariable : "dockerHubPass",usernameVariable : "dockerHubUser")]){
-                    sh "docker-compose --env dockerHubUser=${env.dockerHubUser} down && docker-compose up -d"
+                    sh "docker-compose down && docker-compose up --env dockerHubUser=${env.dockerHubUser} -d"
                 }
             }
         }
