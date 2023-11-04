@@ -1,7 +1,7 @@
 version : '3.3'
 services :
     web : 
-      image : "yashbhanushali777/sketch-app:latest"
+      image : "${dockerHubUser}/sketch-app:latest"
       ports : 
            - "8000:80"
 

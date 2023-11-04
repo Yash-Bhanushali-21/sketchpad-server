@@ -28,7 +28,9 @@ pipeline {
         stage("Deployment"){
             steps {
                 echo "Deploying the Container"
-                sh "docker-compose down && docker-compose up -d"
+                withCredentials([usernamePassword(credentialsId: "DockerhubCreds",passwordVariable : "dockerHubPass",usernameVariable : "dockerHubUser")]){
+                    sh "docker-compose --env dockerHubUser=${env.dockerHubUser} down && docker-compose up -d"
+                }
             }
         }
     }
