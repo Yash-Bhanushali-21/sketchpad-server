@@ -17,7 +17,7 @@ const io = new Server(server, {
 });
 
 app.get("/", (req, res) => {
-  res.send(`You are connected to port ${PORT} !! -- `);
+  res.send(`You are connected to port ${PORT} !! ---- `);
 });
 
 io.on("connection", (socket) => {
