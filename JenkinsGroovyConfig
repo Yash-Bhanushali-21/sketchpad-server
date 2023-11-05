@@ -30,8 +30,8 @@ pipeline {
             steps {
                 echo "Deploying the Container"
                 withCredentials([usernamePassword(credentialsId: "DockerhubCreds",passwordVariable : "dockerHubPass",usernameVariable : "dockerHubUser")]){
-                    sh "docker-compose down && docker system prune --all --volumes --force"
-                    sh "dockerHubUser=${env.dockerHubUser} docker-compose up -d"
+                    sh "docker-compose down && dockerHubUser=${env.dockerHubUser} docker-compose up -d"
+                    sh "docker system prune --all --volumes --force"
                 }
             }
         }
