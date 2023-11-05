@@ -12,6 +12,7 @@ pipeline {
         stage("Build"){
             steps {
                 echo "Building the Code"
+                sh "./create_network.sh"
                 sh "docker build -t sketch-app ."
             }
         }
