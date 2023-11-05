@@ -1,9 +1,15 @@
 version : '3.3'
 services :
-    web : 
+    backend : 
       image : "${dockerHubUser}/sketch-app:latest"
       ports : 
            - "8000:80"
+      networks:
+           - my_network
+networks:
+  my_network:
+    external: true
+    name: my_network
 
 # docker compose up -d : spins up the container in detached mode.
 # docker compose down : stops the container w/o associated name.
