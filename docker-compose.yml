@@ -1,6 +1,7 @@
 version : '3.3'
 services :
     backend : 
+      container_name : "sketchpad-app-backend"
       image : "${dockerHubUser}/sketch-app:latest"
       ports : 
            - "8000:80"
