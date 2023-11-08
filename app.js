@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8000;
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://3.111.40.16:3000/"],
+    origin: ["http://localhost:3000", "http://3.111.40.16:3000"],
   },
 });
 
